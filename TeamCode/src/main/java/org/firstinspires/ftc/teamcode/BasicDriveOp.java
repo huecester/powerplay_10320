@@ -15,8 +15,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 public class BasicDriveOp extends LinearOpMode {
 	private static final double STRAFING_MODIFIER = 1.1;
 
-	private static final RevHubOrientationOnRobot.LogoFacingDirection logoDirection = RevHubOrientationOnRobot.LogoFacingDirection.UP;
-	private static final RevHubOrientationOnRobot.UsbFacingDirection usbDirection = RevHubOrientationOnRobot.UsbFacingDirection.FORWARD;
+	private static final RevHubOrientationOnRobot.LogoFacingDirection LOGO_DIRECTION = RevHubOrientationOnRobot.LogoFacingDirection.UP;
+	private static final RevHubOrientationOnRobot.UsbFacingDirection USB_DIRECTION = RevHubOrientationOnRobot.UsbFacingDirection.FORWARD;
 
 	@Override
 	public void runOpMode() {
@@ -52,7 +52,7 @@ public class BasicDriveOp extends LinearOpMode {
 		backRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
 		telemetry.log().add("Initializing IMU...");
-		imu.initialize(new IMU.Parameters(new RevHubOrientationOnRobot(logoDirection, usbDirection)));
+		imu.initialize(new IMU.Parameters(new RevHubOrientationOnRobot(LOGO_DIRECTION, USB_DIRECTION)));
 
 		telemetry.log().add("Creating telemetry entries...");
 		Telemetry.Item headingItem = telemetry.addData("Heading", "Press [Y] to reset.");
