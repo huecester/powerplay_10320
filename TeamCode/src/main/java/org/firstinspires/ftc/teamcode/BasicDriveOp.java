@@ -21,6 +21,8 @@ public class BasicDriveOp extends LinearOpMode {
 	private static final RevHubOrientationOnRobot.LogoFacingDirection LOGO_DIRECTION = RevHubOrientationOnRobot.LogoFacingDirection.UP;
 	private static final RevHubOrientationOnRobot.UsbFacingDirection USB_DIRECTION = RevHubOrientationOnRobot.UsbFacingDirection.FORWARD;
 
+	public static final String DECIMAL_FORMAT = "%.2f";
+
 	@Override
 	public void runOpMode() {
 		telemetry.log().setDisplayOrder(Telemetry.Log.DisplayOrder.NEWEST_FIRST);
@@ -66,9 +68,9 @@ public class BasicDriveOp extends LinearOpMode {
 		telemetry.log().add("Creating telemetry entries...");
 		Telemetry.Item headingItem = telemetry.addData("Heading", "Press [Y] to reset.");
 		Telemetry.Line gamepadLine = telemetry.addLine("Gamepad");
-		Telemetry.Item gamepadXItem = gamepadLine.addData("X", "%f", 0.0);
-		Telemetry.Item gamepadYItem = gamepadLine.addData("Y", "%f", 0.0);
-		Telemetry.Item gamepadTurnItem = gamepadLine.addData("Turn", "%f", 0.0);
+		Telemetry.Item gamepadXItem = gamepadLine.addData("X", DECIMAL_FORMAT, 0.0);
+		Telemetry.Item gamepadYItem = gamepadLine.addData("Y", DECIMAL_FORMAT, 0.0);
+		Telemetry.Item gamepadTurnItem = gamepadLine.addData("Turn", DECIMAL_FORMAT, 0.0);
 
 		telemetry.log().add("Initialized.");
 		waitForStart();
@@ -81,9 +83,9 @@ public class BasicDriveOp extends LinearOpMode {
 				headingItem.setValue("Press [Y] to reset.");
 			}
 
-			gamepadXItem.setValue(gamepad1.left_stick_x);
-			gamepadYItem.setValue(-gamepad1.left_stick_y);
-			gamepadTurnItem.setValue(gamepad1.right_stick_x);
+			gamepadXItem.setValue(DECIMAL_FORMAT, gamepad1.left_stick_x);
+			gamepadYItem.setValue(DECIMAL_FORMAT, -gamepad1.left_stick_y);
+			gamepadTurnItem.setValue(DECIMAL_FORMAT, gamepad1.right_stick_x);
 
 			// https://gm0.org/en/latest/docs/software/tutorials/mecanum-drive.html#robot-centric-final-sample-code
 			double y = -gamepad1.left_stick_y;
