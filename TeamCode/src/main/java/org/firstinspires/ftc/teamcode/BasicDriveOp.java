@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -10,6 +11,8 @@ import com.qualcomm.robotcore.hardware.IMU;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+
+import java.util.List;
 
 @TeleOp(name = "Basic driving (field-centric)", group = "Driver")
 public class BasicDriveOp extends LinearOpMode {
@@ -22,6 +25,12 @@ public class BasicDriveOp extends LinearOpMode {
 	public void runOpMode() {
 		telemetry.log().setDisplayOrder(Telemetry.Log.DisplayOrder.NEWEST_FIRST);
 		telemetry.log().add("Initializing...");
+
+		telemetry.log().add("Activating cache...");
+		List<LynxModule> hubs = hardwareMap.getAll(LynxModule.class);
+		for (LynxModule hub : hubs) {
+			hub.setBulkCachingMode(LynxModule.BulkCachingMode.AUTO);
+		}
 
 		telemetry.log().add("Setting up hardware...");
 		DcMotorEx frontLeft = hardwareMap.get(DcMotorEx.class, "frontLeft");
