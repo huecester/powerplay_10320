@@ -1,23 +1,25 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorController;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.IMU;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
 @TeleOp(name = "Basic driving (field-centric)", group = "Driver")
 public class BasicDriveOp extends LinearOpMode {
 	private static final double STRAFING_MODIFIER = 1.1;
 
 	private static final RevHubOrientationOnRobot.LogoFacingDirection logoDirection = RevHubOrientationOnRobot.LogoFacingDirection.UP;
-	private static final RevHubOrientationOnRobot.UsbFacingDirection usbDirection = RevHubOrientationOnRobot.LogoFacingDirection.FORWARD;
+	private static final RevHubOrientationOnRobot.UsbFacingDirection usbDirection = RevHubOrientationOnRobot.UsbFacingDirection.FORWARD;
 
 	@Override
-	public void runOpMode() throws InterruptedException {
+	public void runOpMode() {
 		telemetry.log().setDisplayOrder(Telemetry.Log.DisplayOrder.NEWEST_FIRST);
 		telemetry.log().add("Initializing...");
 
@@ -52,6 +54,13 @@ public class BasicDriveOp extends LinearOpMode {
 		telemetry.log().add("Initializing IMU...");
 		imu.initialize(new IMU.Parameters(new RevHubOrientationOnRobot(logoDirection, usbDirection)));
 
+		telemetry.log().add("Creating telemetry entries...");
+		Telemetry.Item headingItem = telemetry.addData("Heading", "Press [Y] to reset.");
+		Telemetry.Line gamepadLine = telemetry.addLine("Gamepad");
+		Telemetry.Item gamepadXItem = gamepadLine.addData("X", "%f", 0.0);
+		Telemetry.Item gamepadYItem = gamepadLine.addData("Y", "%f", 0.0);
+		Telemetry.Item gamepadTurnItem = gamepadLine.addData("Turn", "%f", 0.0);
+
 		telemetry.log().add("Initialized.");
 		waitForStart();
 
@@ -60,10 +69,14 @@ public class BasicDriveOp extends LinearOpMode {
 
 			if (gamepad1.y) {
 				imu.resetYaw();
-				telemetry.addData("Heading", "Reset.");
+				headingItem.setValue("Heading reset.");
 			} else {
-				telemetry.addData("Heading", "Press (Y) to reset.");
+				headingItem.setValue("Press [Y] to reset.");
 			}
+
+			gamepadXItem.setValue(gamepad1.left_stick_x);
+			gamepadYItem.setValue(-gamepad1.left_stick_y);
+			gamepadTurnItem.setValue(gamepad1.right_stick_x);
 
 			// https://gm0.org/en/latest/docs/software/tutorials/mecanum-drive.html#robot-centric-final-sample-code
 			double y = -gamepad1.left_stick_y;
