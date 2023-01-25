@@ -65,8 +65,6 @@ public class BasicDriveOp extends LinearOpMode {
 		waitForStart();
 
 		while (opModeIsActive()) {
-			// TODO: add telemetry
-
 			if (gamepad1.y) {
 				imu.resetYaw();
 				headingItem.setValue("Heading reset.");
