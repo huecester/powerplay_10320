@@ -17,6 +17,9 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
 
+/**
+ * A wrapper around a Mecanum drive train, allowing for robot- or field-centric driving and gamepad or programmatic input.
+ */
 public class Drive {
 	private final IMU imu;
 
@@ -33,20 +36,43 @@ public class Drive {
 	// TODO: remove
 	private final Telemetry.Item debugItem;
 
+	/**
+	 * Flags to modify the behavior of the driving code.
+	 */
 	public enum Flag {
+		/**
+		 * Disable the usage of heading, making the system robot-centric.
+		 */
 		DISABLE_HEADING,
+		/**
+		 * Enable autonomous control, disabling all gamepad input.
+		 */
 		AUTON,
 	}
 
+	/**
+	 * Create a field-centric drive system.
+	 *
+	 * @param hardwareMap Hardware map used to initialize motors and the IMU.
+	 * @param telemetry Telemetry object for logging.
+	 */
 	public Drive(HardwareMap hardwareMap, Telemetry telemetry) {
 		this(hardwareMap, telemetry, true, false);
 	}
 
+	/**
+	 * Create a drive system with a modifier detailed in Flag.
+	 *
+	 * @param hardwareMap Hardware map used to initialize motors and the IMU.
+	 * @param telemetry Telemetry object for logging.
+	 * @param flag Robot behavior modifier.
+	 * @see Flag
+	 */
 	public Drive(HardwareMap hardwareMap, Telemetry telemetry, Flag flag) {
 		this(hardwareMap, telemetry, flag != Flag.DISABLE_HEADING, flag == Flag.AUTON);
 	}
 
-	public Drive(HardwareMap hardwareMap, Telemetry telemetry, boolean useHeading, boolean isAuton) {
+	private Drive(HardwareMap hardwareMap, Telemetry telemetry, boolean useHeading, boolean isAuton) {
 		this.useHeading = useHeading;
 		this.isAuton = isAuton;
 
@@ -74,8 +100,15 @@ public class Drive {
 		telemetry.log().add("Driving is ready.");
 	}
 
+	/**
+	 * Drive using a gamepad. This method should be called constantly in a loop.
+	 *
+	 * @param gamepad Gamepad to use.
+	 */
 	public void drive(Gamepad gamepad) {
-		if (!isAuton && useHeading) {
+		if (isAuton) return;
+
+		if (useHeading) {
 			if (gamepad.y) {
 				imu.resetYaw();
 				headingItem.setValue("Heading is reset.");
@@ -87,13 +120,23 @@ public class Drive {
 		drive(gamepad.left_stick_x, -gamepad.left_stick_y, gamepad.right_stick_x);
 	}
 
+	/**
+	 * Drive using a power and an angle.
+	 *
+	 * @param power Power to drive at, within range [-1, 1].
+	 * @param angle Angle to drive at, in radians.
+	 * @param turn Turning value, within range [-1, 1]. Negative values are CCW, and positive values are CW.
+	 */
 	public void driveAtAngle(double power, double angle, double turn) {
+		power = Math.min(1, Math.max(-1, power));
+		turn = Math.min(1, Math.max(-1, turn));
+
 		double x = power * Math.cos(angle);
 		double y = power * Math.sin(angle);
 		drive(x, y, turn);
 	}
 
-	public void drive(double x, double y, double turn) {
+	private void drive(double x, double y, double turn) {
 		// https://gm0.org/en/latest/docs/software/tutorials/mecanum-drive.html#robot-centric-final-sample-code
 		x *= STRAFING_MODIFIER; // Make strafing more powerful
 
