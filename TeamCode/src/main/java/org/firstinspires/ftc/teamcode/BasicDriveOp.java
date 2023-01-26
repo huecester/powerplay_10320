@@ -8,7 +8,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 import java.util.List;
 
-@TeleOp(name = "Basic driving (field-centric)", group = "Driver")
+@TeleOp(name = "Basic driving", group = "Driver")
 public class BasicDriveOp extends LinearOpMode {
 	@Override
 	public void runOpMode() {
