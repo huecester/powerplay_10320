@@ -15,6 +15,7 @@ import com.qualcomm.robotcore.hardware.IMU;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
 
 public class Drive {
 	private final IMU imu;
@@ -30,6 +31,9 @@ public class Drive {
 	private final Telemetry.Item gamepadTurnItem;
 
 	private final boolean useHeading;
+
+	// TODO: remove
+	private final Telemetry.Item debugItem;
 
 	public Drive(HardwareMap hardwareMap, Telemetry telemetry) {
 		this(hardwareMap, telemetry, true);
@@ -48,6 +52,7 @@ public class Drive {
 		gamepadXItem = gamepadLine.addData("X", DECIMAL_FORMAT, 0.0);
 		gamepadYItem = gamepadLine.addData("Y", DECIMAL_FORMAT, 0.0);
 		gamepadTurnItem = gamepadLine.addData("Turn", DECIMAL_FORMAT, 0.0);
+		debugItem = telemetry.addData("[DEBUG]", "");
 
 		telemetry.log().add("Setting up driving hardware...");
 		frontLeft = hardwareMap.get(DcMotorEx.class, "frontLeft");
@@ -82,7 +87,11 @@ public class Drive {
 
 		// https://gm0.org/en/latest/docs/software/tutorials/mecanum-drive.html#field-centric
 		if (useHeading) {
-			double heading = imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
+			YawPitchRollAngles angles = imu.getRobotYawPitchRollAngles();
+			double headingDegrees = angles.getYaw(AngleUnit.DEGREES);
+			double heading = angles.getYaw(AngleUnit.RADIANS);
+			debugItem.setValue("Heading: " + DECIMAL_FORMAT + " deg | " + DECIMAL_FORMAT + " rad", headingDegrees, heading);
+
 			x = x * Math.cos(heading) - y * Math.sin(heading);
 			y = x * Math.sin(heading) + y * Math.cos(heading);
 		}
