@@ -1,6 +1,9 @@
 package org.firstinspires.ftc.teamcode;
 
 import static org.firstinspires.ftc.teamcode.Config.DECIMAL_FORMAT;
+import static org.firstinspires.ftc.teamcode.Config.LOGO_DIRECTION;
+import static org.firstinspires.ftc.teamcode.Config.STRAFING_MODIFIER;
+import static org.firstinspires.ftc.teamcode.Config.USB_DIRECTION;
 
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -14,10 +17,6 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
 public class Drive {
-	public static final RevHubOrientationOnRobot.LogoFacingDirection LOGO_DIRECTION = RevHubOrientationOnRobot.LogoFacingDirection.UP;
-	public static final RevHubOrientationOnRobot.UsbFacingDirection USB_DIRECTION = RevHubOrientationOnRobot.UsbFacingDirection.FORWARD;
-	private static final double STRAFING_MODIFIER = 1.1;
-
 	private final IMU imu;
 
 	private final DcMotorEx frontLeft;
