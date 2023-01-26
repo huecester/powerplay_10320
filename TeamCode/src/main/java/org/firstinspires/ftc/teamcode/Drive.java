@@ -26,32 +26,40 @@ public class Drive {
 	private final DcMotorEx backRight;
 
 	private final Telemetry.Item headingItem;
-	private final Telemetry.Item gamepadXItem;
-	private final Telemetry.Item gamepadYItem;
-	private final Telemetry.Item gamepadTurnItem;
 
 	private final boolean useHeading;
+	private final boolean isAuton;
 
 	// TODO: remove
 	private final Telemetry.Item debugItem;
 
-	public Drive(HardwareMap hardwareMap, Telemetry telemetry) {
-		this(hardwareMap, telemetry, true);
+	public enum Flag {
+		DISABLE_HEADING,
+		AUTON,
 	}
 
-	public Drive(HardwareMap hardwareMap, Telemetry telemetry, boolean useHeading) {
+	public Drive(HardwareMap hardwareMap, Telemetry telemetry) {
+		this(hardwareMap, telemetry, true, false);
+	}
+
+	public Drive(HardwareMap hardwareMap, Telemetry telemetry, Flag flag) {
+		this(hardwareMap, telemetry, flag != Flag.DISABLE_HEADING, flag == Flag.AUTON);
+	}
+
+	public Drive(HardwareMap hardwareMap, Telemetry telemetry, boolean useHeading, boolean isAuton) {
 		this.useHeading = useHeading;
+		this.isAuton = isAuton;
 
 		telemetry.log().add("Creating telemetry entries...");
-		if (useHeading) {
+
+		if (isAuton) {
+			headingItem = telemetry.addData("Heading", "Controlled by auton.");
+		} else if (useHeading) {
 			headingItem = telemetry.addData("Heading", "Press [Y] to reset.");
 		} else {
 			headingItem = telemetry.addData("Heading", "Heading is disabled.");
 		}
-		Telemetry.Line gamepadLine = telemetry.addLine("Gamepad");
-		gamepadXItem = gamepadLine.addData("X", DECIMAL_FORMAT, 0.0);
-		gamepadYItem = gamepadLine.addData("Y", DECIMAL_FORMAT, 0.0);
-		gamepadTurnItem = gamepadLine.addData("Turn", DECIMAL_FORMAT, 0.0);
+
 		debugItem = telemetry.addData("[DEBUG]", "");
 
 		telemetry.log().add("Setting up driving hardware...");
@@ -66,8 +74,8 @@ public class Drive {
 		telemetry.log().add("Driving is ready.");
 	}
 
-	public void tick(Gamepad gamepad) {
-		if (useHeading) {
+	public void drive(Gamepad gamepad) {
+		if (!isAuton && useHeading) {
 			if (gamepad.y) {
 				imu.resetYaw();
 				headingItem.setValue("Heading is reset.");
@@ -76,14 +84,18 @@ public class Drive {
 			}
 		}
 
-		gamepadXItem.setValue(DECIMAL_FORMAT, gamepad.left_stick_x);
-		gamepadYItem.setValue(DECIMAL_FORMAT, -gamepad.left_stick_y);
-		gamepadTurnItem.setValue(DECIMAL_FORMAT, gamepad.right_stick_x);
+		drive(gamepad.left_stick_x, -gamepad.left_stick_y, gamepad.right_stick_x);
+	}
 
+	public void driveAtAngle(double power, double angle, double turn) {
+		double x = power * Math.cos(angle);
+		double y = power * Math.sin(angle);
+		drive(x, y, turn);
+	}
+
+	public void drive(double x, double y, double turn) {
 		// https://gm0.org/en/latest/docs/software/tutorials/mecanum-drive.html#robot-centric-final-sample-code
-		double y = -gamepad.left_stick_y;
-		double x = gamepad.left_stick_x * STRAFING_MODIFIER; // Make strafing more powerful
-		double turn = gamepad.right_stick_x;
+		x *= STRAFING_MODIFIER; // Make strafing more powerful
 
 		// https://gm0.org/en/latest/docs/software/tutorials/mecanum-drive.html#field-centric
 		if (useHeading) {

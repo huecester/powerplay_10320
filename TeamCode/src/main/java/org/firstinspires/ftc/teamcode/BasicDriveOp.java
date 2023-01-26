@@ -28,7 +28,7 @@ public class BasicDriveOp extends LinearOpMode {
 		waitForStart();
 
 		while (opModeIsActive()) {
-			drive.tick(gamepad1);
+			drive.drive(gamepad1);
 			telemetry.update();
 		}
 	}
