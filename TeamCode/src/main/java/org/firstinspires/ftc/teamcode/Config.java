@@ -12,7 +12,7 @@ public class Config {
 	/**
 	 * USB port facing direction of the hub, used to configure the IMU.
 	 */
-	public static final RevHubOrientationOnRobot.UsbFacingDirection USB_DIRECTION = RevHubOrientationOnRobot.UsbFacingDirection.FORWARD;
+	public static final RevHubOrientationOnRobot.UsbFacingDirection USB_DIRECTION = RevHubOrientationOnRobot.UsbFacingDirection.LEFT;
 
 	/**
 	 * Percent increase in strafing, used to counteract friction and imperfect strafing.

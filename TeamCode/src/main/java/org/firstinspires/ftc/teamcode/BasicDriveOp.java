@@ -22,7 +22,7 @@ public class BasicDriveOp extends LinearOpMode {
 		}
 
 		telemetry.log().add("Setting up drive...");
-		Drive drive = new Drive(hardwareMap, telemetry);
+		Drive drive = new Drive(hardwareMap, telemetry, Drive.Flag.DISABLE_HEADING);
 
 		telemetry.log().add("Initialized.");
 		waitForStart();
