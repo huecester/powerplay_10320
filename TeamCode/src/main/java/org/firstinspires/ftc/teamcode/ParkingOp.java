@@ -1,17 +1,15 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.hardware.lynx.LynxModule;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-
-import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 import java.util.List;
 
-@TeleOp(name = "Basic driving", group = "Driver")
-public class BasicDriveOp extends LinearOpMode {
+@Autonomous(name = "Parking", group = "Basic")
+public class ParkingOp extends LinearOpMode {
 	@Override
-	public void runOpMode() {
+	public void runOpMode() throws InterruptedException {
 		telemetry.log().add("Initializing...");
 
 		telemetry.log().add("Activating cache...");
@@ -21,14 +19,12 @@ public class BasicDriveOp extends LinearOpMode {
 		}
 
 		telemetry.log().add("Setting up drive...");
-		Drive drive = new Drive(hardwareMap, telemetry);
+		Drive drive = new Drive(hardwareMap, telemetry, Drive.Flag.AUTON);
 
 		telemetry.log().add("Initialized.");
 		waitForStart();
 
-		while (opModeIsActive()) {
-			drive.drive(gamepad1);
-			telemetry.update();
-		}
+		drive.driveAtAngle(0.25, 0, 0);
+		Thread.sleep(2500);
 	}
 }

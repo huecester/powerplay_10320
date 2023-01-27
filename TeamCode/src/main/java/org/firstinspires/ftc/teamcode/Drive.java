@@ -124,15 +124,16 @@ public class Drive {
 	 * Drive using a power and an angle.
 	 *
 	 * @param power Power to drive at, within range [-1, 1].
-	 * @param angle Angle to drive at, in radians.
+	 * @param angle Angle to drive at, in radians, within range [-π, π]. 0 radians is forward. Positive values are CW, and negative values are CCW.
 	 * @param turn Turning value, within range [-1, 1]. Negative values are CCW, and positive values are CW.
 	 */
 	public void driveAtAngle(double power, double angle, double turn) {
 		power = Math.min(1, Math.max(-1, power));
+		angle = Math.min(Math.PI, Math.max(-Math.PI, angle));
 		turn = Math.min(1, Math.max(-1, turn));
 
-		double x = power * Math.cos(angle);
-		double y = power * Math.sin(angle);
+		double x = power * Math.sin(angle);
+		double y = power * Math.cos(angle);
 		drive(x, y, turn);
 	}
 
