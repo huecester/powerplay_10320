@@ -21,14 +21,29 @@ public class BasicDriveOp extends LinearOpMode {
 			hub.setBulkCachingMode(LynxModule.BulkCachingMode.AUTO);
 		}
 
+		// TODO: fine-tune button/toggle
 		telemetry.log().add("Setting up drive...");
-		Drive drive = new Drive(hardwareMap, telemetry);
+		Drive drive = new Drive(hardwareMap, telemetry, Drive.Flag.DISABLE_HEADING);
+
+		// TODO: customizable controls
+		telemetry.log().add("Setting up claw...");
+		Claw claw = new Claw(hardwareMap, telemetry);
+
+		telemetry.log().add("Setting up slide...");
+		Slide slide = new Slide(hardwareMap, telemetry);
 
 		telemetry.log().add("Initialized.");
 		waitForStart();
 
+		GamepadEx p1 = new GamepadEx();
+
 		while (opModeIsActive()) {
-			drive.drive(gamepad1);
+			p1.tick(gamepad1);
+
+			drive.drive(p1);
+			claw.control(p1);
+			slide.control(p1);
+
 			telemetry.update();
 		}
 	}
