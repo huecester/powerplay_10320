@@ -117,7 +117,7 @@ public class Drive {
 			}
 		}
 
-		drive(gamepad.getLeftX(), -gamepad.getLeftY(), gamepad.getRightX());
+		drive(gamepad.getLeftX(), -gamepad.getLeftY(), gamepad.getRightX(). gamepad.isPressed(GamepadEx.Button.X));
 	}
 
 	/**
@@ -134,12 +134,18 @@ public class Drive {
 
 		double x = power * Math.sin(angle);
 		double y = power * Math.cos(angle);
-		drive(x, y, turn);
+		drive(x, y, turn, false);
 	}
 
-	private void drive(double x, double y, double turn) {
+	private void drive(double x, double y, double turn, boolean fineTune) {
 		// https://gm0.org/en/latest/docs/software/tutorials/mecanum-drive.html#robot-centric-final-sample-code
 		x *= STRAFING_MODIFIER; // Make strafing more powerful
+
+
+		if (fineTune) {
+			x = x / 2;
+			y = y / 2;
+		}
 
 		// https://gm0.org/en/latest/docs/software/tutorials/mecanum-drive.html#field-centric
 		if (useHeading) {
