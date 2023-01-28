@@ -24,7 +24,7 @@ public class ParkingOp extends LinearOpMode {
 		telemetry.log().add("Initialized.");
 		waitForStart();
 
-		drive.driveAtAngle(0.25, 0, 0);
+		drive.driveAtAngle(0.25, 0, 0, false);
 		Thread.sleep(2500);
 	}
 }
