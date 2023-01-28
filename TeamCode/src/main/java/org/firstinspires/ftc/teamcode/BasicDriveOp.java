@@ -27,6 +27,9 @@ public class BasicDriveOp extends LinearOpMode {
 		telemetry.log().add("Setting up claw...");
 		Claw claw = new Claw(hardwareMap, telemetry);
 
+		telemetry.log().add("Setting up slide...");
+		Slide slide = new Slide(hardwareMap, telemetry);
+
 		telemetry.log().add("Initialized.");
 		waitForStart();
 
@@ -37,6 +40,7 @@ public class BasicDriveOp extends LinearOpMode {
 
 			drive.drive(p1);
 			claw.control(p1);
+			slide.control(p1);
 
 			telemetry.update();
 		}
