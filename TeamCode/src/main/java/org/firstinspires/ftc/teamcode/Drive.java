@@ -147,12 +147,11 @@ public class Drive {
 		}
 
 		// https://gm0.org/en/latest/docs/software/tutorials/mecanum-drive.html#field-centric
+		YawPitchRollAngles angles = imu.getRobotYawPitchRollAngles();
+		double headingDegrees = -angles.getYaw(AngleUnit.DEGREES);
+		double heading = -angles.getYaw(AngleUnit.RADIANS);
+		debugItem.setValue("Heading: " + DECIMAL_FORMAT + " deg | " + DECIMAL_FORMAT + " rad", headingDegrees, heading);
 		if (useHeading) {
-			YawPitchRollAngles angles = imu.getRobotYawPitchRollAngles();
-			double headingDegrees = -angles.getYaw(AngleUnit.DEGREES);
-			double heading = -angles.getYaw(AngleUnit.RADIANS);
-			debugItem.setValue("Heading: " + DECIMAL_FORMAT + " deg | " + DECIMAL_FORMAT + " rad", headingDegrees, heading);
-
 			x = x * Math.cos(heading) - y * Math.sin(heading);
 			y = x * Math.sin(heading) + y * Math.cos(heading);
 		}
