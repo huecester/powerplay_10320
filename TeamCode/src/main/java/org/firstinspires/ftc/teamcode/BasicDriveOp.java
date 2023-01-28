@@ -24,11 +24,20 @@ public class BasicDriveOp extends LinearOpMode {
 		telemetry.log().add("Setting up drive...");
 		Drive drive = new Drive(hardwareMap, telemetry, Drive.Flag.DISABLE_HEADING);
 
+		telemetry.log().add("Setting up claw...");
+		Claw claw = new Claw(hardwareMap, telemetry);
+
 		telemetry.log().add("Initialized.");
 		waitForStart();
 
+		GamepadEx p1 = new GamepadEx();
+
 		while (opModeIsActive()) {
-			drive.drive(gamepad1);
+			p1.tick(gamepad1);
+
+			drive.drive(p1);
+			claw.control(p1);
+
 			telemetry.update();
 		}
 	}

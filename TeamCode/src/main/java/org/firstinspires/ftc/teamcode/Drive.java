@@ -86,7 +86,7 @@ public class Drive {
 			headingItem = telemetry.addData("Heading", "Heading is disabled.");
 		}
 
-		debugItem = telemetry.addData("[DEBUG]", "");
+		debugItem = telemetry.addData("[DEBUG] Drive", "");
 
 		telemetry.log().add("Setting up driving hardware...");
 		frontLeft = hardwareMap.get(DcMotorEx.class, "frontLeft");
@@ -105,11 +105,11 @@ public class Drive {
 	 *
 	 * @param gamepad Gamepad to use.
 	 */
-	public void drive(Gamepad gamepad) {
+	public void drive(GamepadEx gamepad) {
 		if (isAuton) return;
 
 		if (useHeading) {
-			if (gamepad.y) {
+			if (gamepad.isPressed(GamepadEx.Button.Y)) {
 				imu.resetYaw();
 				headingItem.setValue("Heading is reset.");
 			} else {
@@ -117,7 +117,7 @@ public class Drive {
 			}
 		}
 
-		drive(gamepad.left_stick_x, -gamepad.left_stick_y, gamepad.right_stick_x);
+		drive(gamepad.getLeftX(), -gamepad.getLeftY(), gamepad.getRightX());
 	}
 
 	/**
