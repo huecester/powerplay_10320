@@ -9,7 +9,6 @@ import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
 
@@ -95,7 +94,7 @@ public class Drive {
 		backRight = hardwareMap.get(DcMotorEx.class, "backRight");
 		imu = hardwareMap.get(IMU.class, "imu");
 
-		initialize(telemetry);
+		configure(telemetry);
 
 		telemetry.log().add("Driving is ready.");
 	}
@@ -160,7 +159,7 @@ public class Drive {
 		backRight.setPower((y + x - turn) / denominator);
 	}
 
-	private void initialize(Telemetry telemetry) {
+	private void configure(Telemetry telemetry) {
 		telemetry.log().add("Configuring motors...");
 		frontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
 		backLeft.setDirection(DcMotorSimple.Direction.REVERSE);
