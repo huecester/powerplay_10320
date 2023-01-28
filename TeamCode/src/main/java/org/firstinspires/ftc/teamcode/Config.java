@@ -44,5 +44,5 @@ public class Config {
 	/**
 	 * Motor position for the raised slide, in encoder ticks.
 	 */
-	public static final int SLIDE_UP_POSITION = 100;
+	public static final int SLIDE_UP_POSITION = 250;
 }

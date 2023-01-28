@@ -37,7 +37,7 @@ public class Claw {
 
 		telemetry.log().add("Configuring servos...");
 		left.setDirection(Servo.Direction.FORWARD);
-		right.setDirection(Servo.Direction.FORWARD);
+		right.setDirection(Servo.Direction.REVERSE);
 
 		telemetry.log().add("Claw is ready.");
 	}
