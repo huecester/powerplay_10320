@@ -117,7 +117,7 @@ public class Drive {
 			}
 		}
 
-		drive(gamepad.getLeftX(), -gamepad.getLeftY(), gamepad.getRightX());
+		drive(gamepad.getLeftX(), -gamepad.getLeftY(), gamepad.getRightX(), gamepad.isPressed(GamepadEx.Button.X));
 	}
 
 	/**
@@ -127,18 +127,23 @@ public class Drive {
 	 * @param angle Angle to drive at, in radians.
 	 * @param turn Turning value, within range [-1, 1]. Negative values are CCW, and positive values are CW.
 	 */
-	public void driveAtAngle(double power, double angle, double turn) {
+	public void driveAtAngle(double power, double angle, double turn, boolean fineTune) {
 		power = Math.min(1, Math.max(-1, power));
 		turn = Math.min(1, Math.max(-1, turn));
 
 		double x = power * Math.cos(angle);
 		double y = power * Math.sin(angle);
-		drive(x, y, turn);
+		drive(x, y, turn, fineTune);
 	}
 
-	private void drive(double x, double y, double turn) {
+	private void drive(double x, double y, double turn, boolean fineTune) {
 		// https://gm0.org/en/latest/docs/software/tutorials/mecanum-drive.html#robot-centric-final-sample-code
 		x *= STRAFING_MODIFIER; // Make strafing more powerful
+
+		if (fineTune) {
+			x /= 2;
+			y /= 2;
+		}
 
 		// https://gm0.org/en/latest/docs/software/tutorials/mecanum-drive.html#field-centric
 		if (useHeading) {
