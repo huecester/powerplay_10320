@@ -10,6 +10,9 @@ import com.qualcomm.robotcore.hardware.ServoImplEx;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
+/**
+ * A wrapper around a two-servo claw.
+ */
 public class Claw {
 	private final ServoImplEx left;
 	private final ServoImplEx right;
@@ -17,6 +20,12 @@ public class Claw {
 	private final Telemetry.Item leftItem;
 	private final Telemetry.Item rightItem;
 
+	/**
+	 * Create a claw system.
+	 *
+	 * @param hardwareMap Hardware map used to initialize servos.
+	 * @param telemetry Telemetry object for logging.
+	 */
 	public Claw(HardwareMap hardwareMap, Telemetry telemetry) {
 		telemetry.log().add("Creating telemetry items...");
 		leftItem = telemetry.addData("[DEBUG] Left", DECIMAL_FORMAT, 0.0);
@@ -33,6 +42,12 @@ public class Claw {
 		telemetry.log().add("Claw is ready.");
 	}
 
+	/**
+	 * Control the slide using a gamepad.
+	 *
+	 * @param gamepad Gamepad to use.
+	 * @see GamepadEx
+	 */
 	public void control(GamepadEx gamepad) {
 		leftItem.setValue(left.getPosition());
 		rightItem.setValue(right.getPosition());
@@ -44,11 +59,21 @@ public class Claw {
 		}
 	}
 
+	/**
+	 * Close the claw. Position is based on Config.CLAW_CLOSE_POSITION.
+	 *
+	 * @see Config
+	 */
 	public void close() {
 		left.setPosition(CLAW_CLOSE_POSITION);
 		right.setPosition(CLAW_CLOSE_POSITION);
 	}
 
+	/**
+	 * Open the claw. Position is based on Config.CLAW_OPEN_POSITION.
+	 *
+	 * @see Config
+	 */
 	public void open() {
 		left.setPosition(CLAW_OPEN_POSITION);
 		right.setPosition(CLAW_OPEN_POSITION);

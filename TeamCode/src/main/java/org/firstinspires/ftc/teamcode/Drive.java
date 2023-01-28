@@ -103,6 +103,7 @@ public class Drive {
 	 * Drive using a gamepad. This method should be called constantly in a loop.
 	 *
 	 * @param gamepad Gamepad to use.
+	 * @see GamepadEx
 	 */
 	public void drive(GamepadEx gamepad) {
 		if (isAuton) return;

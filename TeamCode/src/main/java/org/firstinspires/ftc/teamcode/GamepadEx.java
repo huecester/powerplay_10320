@@ -2,7 +2,13 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.Gamepad;
 
+/**
+ * A wrapper around a Gamepad. Provides additional utility methods, such as didFall and didRise to detect falling-/rising-edge button presses.
+ */
 public class GamepadEx {
+	/**
+	 * A gamepad button.
+	 */
 	public enum Button {
 		A,
 		B,
@@ -24,11 +30,22 @@ public class GamepadEx {
 	private final Gamepad previous = new Gamepad();
 	private final Gamepad current = new Gamepad();
 
+	/**
+	 * Update the gamepad state. Should be called every loop, before using anything that uses the gamepad.
+	 *
+	 * @param gamepad Gamepad to update state from.
+	 */
 	public void tick(Gamepad gamepad) {
 		previous.copy(current);
 		current.copy(gamepad);
 	}
 
+	/**
+	 * Checks for a rising-edge press from a button.
+	 *
+	 * @param button Button to check.
+	 * @return Returns true if the button did rise (was pressed).
+	 */
 	public boolean didRise(Button button) {
 		switch (button) {
 			case A:
@@ -66,6 +83,12 @@ public class GamepadEx {
 		}
 	}
 
+	/**
+	 * Checks for a falling-edge press from a button.
+	 *
+	 * @param button Button to check.
+	 * @return Returns true if the button did fall (was released).
+	 */
 	public boolean didFall(Button button) {
 		switch (button) {
 			case A:
@@ -140,18 +163,38 @@ public class GamepadEx {
 		}
 	}
 
+	/**
+	 * Get the left stick's X value.
+	 *
+	 * @return Returns the left stick's X value.
+	 */
 	public double getLeftX() {
 		return current.left_stick_x;
 	}
 
+	/**
+	 * Get the left stick's Y value.
+	 *
+	 * @return Returns the left stick's Y value.
+	 */
 	public double getLeftY() {
 		return current.left_stick_y;
 	}
 
+	/**
+	 * Get the right stick's X value.
+	 *
+	 * @return Returns the right stick's X value.
+	 */
 	public double getRightX() {
 		return current.right_stick_x;
 	}
 
+	/**
+	 * Get the right stick's Y value.
+	 *
+	 * @return Returns the right stick's Y value.
+	 */
 	public double getRightY() {
 		return current.right_stick_y;
 	}
