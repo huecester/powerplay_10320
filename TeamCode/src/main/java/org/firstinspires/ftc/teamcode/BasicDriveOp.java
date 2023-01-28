@@ -21,6 +21,7 @@ public class BasicDriveOp extends LinearOpMode {
 			hub.setBulkCachingMode(LynxModule.BulkCachingMode.AUTO);
 		}
 
+		// TODO: fine-tune button/toggle
 		telemetry.log().add("Setting up drive...");
 		Drive drive = new Drive(hardwareMap, telemetry, Drive.Flag.DISABLE_HEADING);
 
