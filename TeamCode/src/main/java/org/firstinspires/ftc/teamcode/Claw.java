@@ -18,8 +18,6 @@ public class Claw {
 	private final Telemetry.Item rightItem;
 
 	public Claw(HardwareMap hardwareMap, Telemetry telemetry) {
-		// TODO: other things
-
 		telemetry.log().add("Creating telemetry items...");
 		leftItem = telemetry.addData("[DEBUG] Left", DECIMAL_FORMAT, 0.0);
 		rightItem = telemetry.addData("[DEBUG] Right", DECIMAL_FORMAT, 0.0);
@@ -39,9 +37,9 @@ public class Claw {
 		leftItem.setValue(left.getPosition());
 		rightItem.setValue(right.getPosition());
 
-		if (gamepad.didRise(GamepadEx.Button.LB)) {
+		if (gamepad.didFall(GamepadEx.Button.LB)) {
 			close();
-		} else if (gamepad.didRise(GamepadEx.Button.RB)) {
+		} else if (gamepad.didFall(GamepadEx.Button.RB)) {
 			open();
 		}
 	}

@@ -26,4 +26,8 @@ public class Config {
 
 	public static final double CLAW_CLOSE_POSITION = 0.0;
 	public static final double CLAW_OPEN_POSITION = 1.0;
+
+	public static final double SLIDE_POWER = 0.1;
+	public static final int SLIDE_DOWN_POSITION = 0;
+	public static final int SLIDE_UP_POSITION = 100;
 }
