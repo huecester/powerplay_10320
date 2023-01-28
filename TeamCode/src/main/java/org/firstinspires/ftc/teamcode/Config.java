@@ -24,10 +24,25 @@ public class Config {
 	 */
 	public static final String DECIMAL_FORMAT = "%.2f";
 
+	/**
+	 * Servo position for the closed claw, within range [0.0, 1.0].
+	 */
 	public static final double CLAW_CLOSE_POSITION = 0.0;
+	/**
+	 * Servo position for the open claw, within range [0.0, 1.0].
+	 */
 	public static final double CLAW_OPEN_POSITION = 1.0;
 
+	/**
+	 * Power to set the slide motor to, within range [0.0, 1.0].
+	 */
 	public static final double SLIDE_POWER = 0.1;
+	/**
+	 * Motor position for the lowered slide, in encoder ticks.
+	 */
 	public static final int SLIDE_DOWN_POSITION = 0;
+	/**
+	 * Motor position for the raised slide, in encoder ticks.
+	 */
 	public static final int SLIDE_UP_POSITION = 100;
 }

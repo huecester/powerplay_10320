@@ -12,9 +12,18 @@ import com.qualcomm.robotcore.hardware.ServoImplEx;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
+/**
+ * A wrapper around a one-motor linear slide.
+ */
 public class Slide {
 	private final DcMotorEx motor;
 
+	/**
+	 * Create a slide system.
+	 *
+	 * @param hardwareMap Hardware map used to initialize the motor.
+	 * @param telemetry Telemetry object for logging.
+	 */
 	public Slide(HardwareMap hardwareMap, Telemetry telemetry) {
 		telemetry.log().add("Setting up slide hardware...");
 		motor = hardwareMap.get(DcMotorEx.class, "slide");
@@ -29,6 +38,12 @@ public class Slide {
 		telemetry.log().add("Slide is ready.");
 	}
 
+	/**
+	 * Control the slide using a gamepad. [A] raises the slide, and [B] lowers it.
+	 *
+	 * @param gamepad Gamepad to use.
+	 * @see GamepadEx
+	 */
 	public void control(GamepadEx gamepad) {
 		if (gamepad.didFall(GamepadEx.Button.A)) {
 			raise();
@@ -37,10 +52,20 @@ public class Slide {
 		}
 	}
 
+	/**
+	 * Raise the slide. Based on Config.SLIDE_UP_POSITION.
+	 *
+	 * @see Config
+	 */
 	public void raise() {
 		motor.setTargetPosition(SLIDE_UP_POSITION);
 	}
 
+	/**
+	 * Lower the slide. Based on Config.SLIDE_DOWN_POSITION.
+	 *
+	 * @see Config
+	 */
 	public void lower() {
 		motor.setTargetPosition(SLIDE_DOWN_POSITION);
 	}
