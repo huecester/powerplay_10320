@@ -23,4 +23,7 @@ public class Config {
 	 * Format string, used to format all floats/doubles/other decimal numbers.
 	 */
 	public static final String DECIMAL_FORMAT = "%.2f";
+
+	public static final double CLAW_CLOSE_POSITION = 0.0;
+	public static final double CLAW_OPEN_POSITION = 1.0;
 }
