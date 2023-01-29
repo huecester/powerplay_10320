@@ -16,6 +16,8 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 public class Slide {
 	private final DcMotorEx motor;
 
+	private final Telemetry.Item debugItem;
+
 	/**
 	 * Create a slide system.
 	 *
@@ -23,6 +25,8 @@ public class Slide {
 	 * @param telemetry Telemetry object for logging.
 	 */
 	public Slide(HardwareMap hardwareMap, Telemetry telemetry) {
+		debugItem = telemetry.addData("[DEBUG] Slide", "");
+
 		telemetry.log().add("Setting up slide hardware...");
 		motor = hardwareMap.get(DcMotorEx.class, "slide");
 
@@ -42,6 +46,8 @@ public class Slide {
 	 * @see GamepadEx
 	 */
 	public void control(GamepadEx gamepad) {
+		debugItem.setValue(motor.getCurrentPosition());
+
 		if (gamepad.isPressed(GamepadEx.Button.A)) {
 			raise();
 		} else if (gamepad.isPressed(GamepadEx.Button.B)) {
@@ -55,7 +61,12 @@ public class Slide {
 	 * Raise the slide.
 	 */
 	public void raise() {
-		motor.setVelocity(SLIDE_VELOCITY);
+		/*
+		if (motor.getCurrent() >= SLIDE_TOP_LIMIT)
+			stop();
+		else
+		*/
+			motor.setVelocity(SLIDE_VELOCITY);
 	}
 
 	/**

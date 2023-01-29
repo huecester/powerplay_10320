@@ -41,4 +41,8 @@ public class Config {
 	 * Bottom limit to stop the slide at when lowering, in ticks.
 	 */
 	public static final int SLIDE_BOTTOM_LIMIT = 10;
+	/**
+	 * Top limit to stop the slide at when raising, in ticks.
+	 */
+	public static final int SLIDE_TOP_LIMIT = 1000;
 }
