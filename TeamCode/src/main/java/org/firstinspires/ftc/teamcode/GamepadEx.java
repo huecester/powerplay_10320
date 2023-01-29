@@ -198,4 +198,22 @@ public class GamepadEx {
 	public double getRightY() {
 		return current.right_stick_y;
 	}
+
+	/**
+	 * Get the left trigger's value.
+	 *
+	 * @return Returns the left trigger's value.
+	 */
+	public double getLT() {
+		return current.left_trigger;
+	}
+
+	/**
+	 * Get the right trigger's value.
+	 *
+	 * @return Returns the right trigger's value.
+	 */
+	public double getRT() {
+		return current.right_trigger;
+	}
 }

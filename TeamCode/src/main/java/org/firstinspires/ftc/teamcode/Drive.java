@@ -112,7 +112,6 @@ public class Drive {
 	public void drive(GamepadEx gamepad) {
 		if (isAuton) return;
 
-
 		if (useHeading) {
 			if (gamepad.isPressed(GamepadEx.Button.Y)) {
 				imu.resetYaw();
@@ -122,10 +121,10 @@ public class Drive {
 			}
 		}
 
-		double x = gamepad.getLeftX();
-		double y = -gamepad.getLeftY();
-		double turn = gamepad.getRightX();
-		boolean fineTune = gamepad.isPressed(GamepadEx.Button.X);
+		double x = (gamepad.isPressed(GamepadEx.Button.RB) ? 1 : 0) - (gamepad.isPressed(GamepadEx.Button.LB) ? 1 : 0);
+		double y = gamepad.getRT() - gamepad.getLT();
+		double turn = gamepad.getLeftX();
+		boolean fineTune = gamepad.isPressed(GamepadEx.Button.B);
 		debugGamepadItem.setValue(DECIMAL_FORMAT + " | " + DECIMAL_FORMAT + " | " + DECIMAL_FORMAT + " | " + fineTune, x, y, turn);
 		drive(x, y, turn, fineTune);
 	}

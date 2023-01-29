@@ -43,7 +43,7 @@ public class Slide {
 	}
 
 	/**
-	 * Control the slide using a gamepad. [A] raises the slide, and [B] lowers it.
+	 * Control the slide using a gamepad.
 	 *
 	 * @param gamepad Gamepad to use.
 	 * @see GamepadEx
@@ -51,9 +51,9 @@ public class Slide {
 	public void control(GamepadEx gamepad) {
 		debugItem.setValue(motor.getCurrentPosition());
 
-		if (gamepad.isPressed(GamepadEx.Button.A)) {
+		if (gamepad.isPressed(GamepadEx.Button.Y)) {
 			raise();
-		} else if (gamepad.isPressed(GamepadEx.Button.B)) {
+		} else if (gamepad.isPressed(GamepadEx.Button.X)) {
 			lower();
 		} else {
 			stop();

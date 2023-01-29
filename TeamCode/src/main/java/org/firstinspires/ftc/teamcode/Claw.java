@@ -20,6 +20,8 @@ public class Claw {
 	private final Telemetry.Item leftItem;
 	private final Telemetry.Item rightItem;
 
+	private boolean isOpen = false;
+
 	/**
 	 * Create a claw system.
 	 *
@@ -41,6 +43,9 @@ public class Claw {
 		left.setDirection(Servo.Direction.FORWARD);
 		right.setDirection(Servo.Direction.REVERSE);
 
+		telemetry.log().add("Closing claw...");
+		close();
+
 		telemetry.log().add("Claw is ready.");
 	}
 
@@ -54,10 +59,13 @@ public class Claw {
 		leftItem.setValue(left.getPosition());
 		rightItem.setValue(right.getPosition());
 
-		if (gamepad.didFall(GamepadEx.Button.LB)) {
-			close();
-		} else if (gamepad.didFall(GamepadEx.Button.RB)) {
-			open();
+		if (gamepad.didFall(GamepadEx.Button.A)) {
+			if (isOpen) {
+				close();
+			} else {
+				open();
+			}
+			isOpen = !isOpen;
 		}
 	}
 
