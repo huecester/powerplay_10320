@@ -45,4 +45,21 @@ public class Config {
 	 * Top limit to stop the slide at when raising, in ticks.
 	 */
 	public static final int SLIDE_TOP_LIMIT = 1000;
+
+	/**
+	 * Size of AprilTags, in meters.
+	 */
+	public static final double APRIL_TAG_SIZE = 0.166;
+	/**
+	 * ID of AprilTag for left parking space.
+	 */
+	public static final int TAG_LEFT = 18;
+	/**
+	 * ID of AprilTag for middle parking space.
+	 */
+	public static final int TAG_MIDDLE = 3;
+	/**
+	 * ID of AprilTag for right parking space.
+	 */
+	public static final int TAG_RIGHT = 7;
 }

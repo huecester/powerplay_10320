@@ -147,6 +147,16 @@ public class Drive {
 		drive(x, y, turn, fineTune);
 	}
 
+	/**
+	 * Stop all motors in the drive train.
+	 */
+	public void stop() {
+		frontLeft.setPower(0);
+		backLeft.setPower(0);
+		frontRight.setPower(0);
+		backRight.setPower(0);
+	}
+
 	private void drive(double x, double y, double turn, boolean fineTune) {
 		// https://gm0.org/en/latest/docs/software/tutorials/mecanum-drive.html#robot-centric-final-sample-code
 		x *= STRAFING_MODIFIER; // Make strafing more powerful
