@@ -89,8 +89,13 @@ public class ParkingConeRightAuton extends LinearOpMode {
 			}
 		});
 
+		waitForStart();
+
 		telemetry.log().setDisplayOrder(Telemetry.Log.DisplayOrder.OLDEST_FIRST);
-		while (opModeInInit()) {
+		// TODO: move to config
+		final int MAX_TRIES = 10;
+		int tries = 0;
+		while (tagOfInterest == null && tries++ < MAX_TRIES) {
 			ArrayList<AprilTagDetection> currentDetections = aprilTagDetectionPipeline.getLatestDetections();
 
 			if (currentDetections.size() != 0) {
@@ -100,7 +105,6 @@ public class ParkingConeRightAuton extends LinearOpMode {
 					if (tag.id == TAG_LEFT || tag.id == TAG_MIDDLE || tag.id == TAG_RIGHT) {
 						tagOfInterest = tag;
 						tagFound = true;
-						break;
 					}
 				}
 
@@ -108,19 +112,13 @@ public class ParkingConeRightAuton extends LinearOpMode {
 					telemetry.log().add("Found valid tag:\n" + tagToTelemetryString(tagOfInterest));
 				} else {
 					telemetry.log().add("Tag not found.");
-					if (tagOfInterest != null) {
-						telemetry.addLine("Tag has been seen before:\n" + tagToTelemetryString(tagOfInterest));
-					}
 				}
 			} else {
 				telemetry.log().add("Tag not found.");
-				if (tagOfInterest != null) {
-					telemetry.addLine("Tag has been seen before:\n" + tagToTelemetryString(tagOfInterest));
-				}
 			}
 
 			telemetry.update();
-			Thread.sleep(250);
+			Thread.sleep(500);
 		}
 
 		if (tagOfInterest != null) {
@@ -131,12 +129,14 @@ public class ParkingConeRightAuton extends LinearOpMode {
 		telemetry.update();
 
 		drive.driveAtAngle(1.0, 0, 0, false);
-		Thread.sleep(1200);
+		Thread.sleep(1050);
+		drive.stop();
+		slide.top();
 		drive.driveAtAngle(1.0, Math.toRadians(90), 0, false);
 		Thread.sleep(600);
-		slide.top();
 		drive.driveAtAngle(0.5, 0, 0, false);
 		Thread.sleep(250);
+		drive.stop();
 		claw.open();
 		slide.bottom();
 		drive.driveAtAngle(0.5, Math.toRadians(180), 0, false);

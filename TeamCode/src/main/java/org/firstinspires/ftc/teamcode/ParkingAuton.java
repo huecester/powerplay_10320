@@ -58,6 +58,8 @@ public class ParkingAuton extends LinearOpMode {
 
 		telemetry.log().add("Setting up hardware...");
         Drive drive = new Drive(hardwareMap, telemetry, Drive.Flag.AUTON);
+		Claw claw = new Claw(hardwareMap, telemetry);
+		claw.open();
 
 		telemetry.log().add("Creating AprilTagDetection components...");
 		AprilTagDetection tagOfInterest = null;
@@ -87,8 +89,13 @@ public class ParkingAuton extends LinearOpMode {
 			}
 		});
 
+		waitForStart();
+
 		telemetry.log().setDisplayOrder(Telemetry.Log.DisplayOrder.OLDEST_FIRST);
-		while (opModeInInit()) {
+		// TODO: move to config
+		final int MAX_TRIES = 10;
+		int tries = 0;
+		while (tagOfInterest == null && tries++ < MAX_TRIES) {
 			ArrayList<AprilTagDetection> currentDetections = aprilTagDetectionPipeline.getLatestDetections();
 
 			if (currentDetections.size() != 0) {
@@ -98,7 +105,6 @@ public class ParkingAuton extends LinearOpMode {
 					if (tag.id == TAG_LEFT || tag.id == TAG_MIDDLE || tag.id == TAG_RIGHT) {
 						tagOfInterest = tag;
 						tagFound = true;
-						break;
 					}
 				}
 
@@ -106,19 +112,13 @@ public class ParkingAuton extends LinearOpMode {
 					telemetry.log().add("Found valid tag:\n" + tagToTelemetryString(tagOfInterest));
 				} else {
 					telemetry.log().add("Tag not found.");
-					if (tagOfInterest != null) {
-						telemetry.addLine("Tag has been seen before:\n" + tagToTelemetryString(tagOfInterest));
-					}
 				}
 			} else {
 				telemetry.log().add("Tag not found.");
-				if (tagOfInterest != null) {
-					telemetry.addLine("Tag has been seen before:\n" + tagToTelemetryString(tagOfInterest));
-				}
 			}
 
 			telemetry.update();
-			Thread.sleep(250);
+			Thread.sleep(500);
 		}
 
 		if (tagOfInterest != null) {
@@ -129,7 +129,7 @@ public class ParkingAuton extends LinearOpMode {
 		telemetry.update();
 
 		drive.driveAtAngle(1.0, 0, 0, false);
-		Thread.sleep(1200);
+		Thread.sleep(1050);
 		switch (tagOfInterest != null ? tagOfInterest.id : -1) {
 			case TAG_LEFT:
 				drive.driveAtAngle(1.0, Math.toRadians(-90), 0, false);
