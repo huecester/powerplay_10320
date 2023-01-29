@@ -49,7 +49,7 @@ public class Slide {
 		motor = hardwareMap.get(DcMotorEx.class, "slide");
 
 		telemetry.log().add("Configuring motor...");
-		motor.setDirection(DcMotorSimple.Direction.REVERSE);
+		motor.setDirection(DcMotorSimple.Direction.FORWARD);
 		motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 		motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 		motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
