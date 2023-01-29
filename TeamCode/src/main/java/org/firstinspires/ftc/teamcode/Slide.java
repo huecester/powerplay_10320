@@ -1,14 +1,12 @@
 package org.firstinspires.ftc.teamcode;
 
-import static org.firstinspires.ftc.teamcode.Config.SLIDE_DOWN_POSITION;
-import static org.firstinspires.ftc.teamcode.Config.SLIDE_POWER;
-import static org.firstinspires.ftc.teamcode.Config.SLIDE_UP_POSITION;
+import static org.firstinspires.ftc.teamcode.Config.SLIDE_BOTTOM_LIMIT;
+import static org.firstinspires.ftc.teamcode.Config.SLIDE_VELOCITY;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.ServoImplEx;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
@@ -18,6 +16,8 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 public class Slide {
 	private final DcMotorEx motor;
 
+	private final Telemetry.Item debugItem;
+
 	/**
 	 * Create a slide system.
 	 *
@@ -25,6 +25,8 @@ public class Slide {
 	 * @param telemetry Telemetry object for logging.
 	 */
 	public Slide(HardwareMap hardwareMap, Telemetry telemetry) {
+		debugItem = telemetry.addData("[DEBUG] Slide", "");
+
 		telemetry.log().add("Setting up slide hardware...");
 		motor = hardwareMap.get(DcMotorEx.class, "slide");
 
@@ -32,8 +34,7 @@ public class Slide {
 		motor.setDirection(DcMotorSimple.Direction.FORWARD);
 		motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 		motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-		motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-		motor.setPower(SLIDE_POWER);
+		motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
 		telemetry.log().add("Slide is ready.");
 	}
@@ -45,28 +46,43 @@ public class Slide {
 	 * @see GamepadEx
 	 */
 	public void control(GamepadEx gamepad) {
-		if (gamepad.didFall(GamepadEx.Button.A)) {
+		debugItem.setValue(motor.getCurrentPosition());
+
+		if (gamepad.isPressed(GamepadEx.Button.A)) {
 			raise();
-		} else if (gamepad.didFall(GamepadEx.Button.B)) {
+		} else if (gamepad.isPressed(GamepadEx.Button.B)) {
 			lower();
+		} else {
+			stop();
 		}
 	}
 
 	/**
-	 * Raise the slide. Based on Config.SLIDE_UP_POSITION.
-	 *
-	 * @see Config
+	 * Raise the slide.
 	 */
 	public void raise() {
-		motor.setTargetPosition(SLIDE_UP_POSITION);
+		/*
+		if (motor.getCurrent() >= SLIDE_TOP_LIMIT)
+			stop();
+		else
+		*/
+			motor.setVelocity(SLIDE_VELOCITY);
 	}
 
 	/**
-	 * Lower the slide. Based on Config.SLIDE_DOWN_POSITION.
-	 *
-	 * @see Config
+	 * Lower the slide.
 	 */
 	public void lower() {
-		motor.setTargetPosition(SLIDE_DOWN_POSITION);
+		if (motor.getCurrentPosition() <= SLIDE_BOTTOM_LIMIT)
+			stop();
+		else
+			motor.setVelocity(-SLIDE_VELOCITY);
+	}
+
+	/**
+	 * Stop the slide.
+	 */
+	public void stop() {
+		motor.setVelocity(0);
 	}
 }

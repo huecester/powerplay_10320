@@ -33,7 +33,8 @@ public class Drive {
 	private final boolean isAuton;
 
 	// TODO: remove
-	private final Telemetry.Item debugItem;
+	private final Telemetry.Item debugHeadingItem;
+	private final Telemetry.Item debugGamepadItem;
 
 	/**
 	 * Flags to modify the behavior of the driving code.
@@ -85,7 +86,8 @@ public class Drive {
 			headingItem = telemetry.addData("Heading", "Heading is disabled.");
 		}
 
-		debugItem = telemetry.addData("[DEBUG] Drive", "");
+		debugHeadingItem = telemetry.addData("[DEBUG] Heading", "");
+		debugGamepadItem = telemetry.addData("[DEBUG] Gamepad", "");
 
 		telemetry.log().add("Setting up driving hardware...");
 		frontLeft = hardwareMap.get(DcMotorEx.class, "frontLeft");
@@ -108,6 +110,7 @@ public class Drive {
 	public void drive(GamepadEx gamepad) {
 		if (isAuton) return;
 
+
 		if (useHeading) {
 			if (gamepad.isPressed(GamepadEx.Button.Y)) {
 				imu.resetYaw();
@@ -117,7 +120,12 @@ public class Drive {
 			}
 		}
 
-		drive(gamepad.getLeftX(), -gamepad.getLeftY(), gamepad.getRightX(), gamepad.isPressed(GamepadEx.Button.X));
+		double x = gamepad.getLeftX();
+		double y = -gamepad.getLeftY();
+		double turn = gamepad.getRightX();
+		boolean fineTune = gamepad.isPressed(GamepadEx.Button.X);
+		debugGamepadItem.setValue(DECIMAL_FORMAT + " | " + DECIMAL_FORMAT + " | " + DECIMAL_FORMAT + " | " + fineTune, x, y, turn);
+		drive(x, y, turn, fineTune);
 	}
 
 	/**
@@ -125,7 +133,7 @@ public class Drive {
 	 *
 	 * @param power Power to drive at, within range [-1, 1].
 	 * @param angle Angle to drive at, in radians, within range [-π, π]. 0 radians is forward. Positive values are CW, and negative values are CCW.
-	 * @param turn Turning value, within range [-1, 1]. Negative values are CCW, and positive values are CW.
+	 * @param turn Turning value, within range [-1, 1]. Positive values are CW, and negative values are CCW.
 	 */
 	public void driveAtAngle(double power, double angle, double turn, boolean fineTune) {
 		power = Math.min(1, Math.max(-1, power));
@@ -142,21 +150,21 @@ public class Drive {
 		x *= STRAFING_MODIFIER; // Make strafing more powerful
 
 		if (fineTune) {
-			x /= 2;
-			y /= 2;
+			x /= 4;
+			y /= 4;
 		}
 
 		// https://gm0.org/en/latest/docs/software/tutorials/mecanum-drive.html#field-centric
 		YawPitchRollAngles angles = imu.getRobotYawPitchRollAngles();
 		double headingDegrees = -angles.getYaw(AngleUnit.DEGREES);
 		double heading = -angles.getYaw(AngleUnit.RADIANS);
-		debugItem.setValue("Heading: " + DECIMAL_FORMAT + " deg | " + DECIMAL_FORMAT + " rad", headingDegrees, heading);
+		debugHeadingItem.setValue(DECIMAL_FORMAT + " deg | " + DECIMAL_FORMAT + " rad", headingDegrees, heading);
 		if (useHeading) {
 			x = x * Math.cos(heading) - y * Math.sin(heading);
 			y = x * Math.sin(heading) + y * Math.cos(heading);
 		}
 
-		// Clip power range to [0.0, 1.0]
+		// Clip power range to [-1.0, 1.0]
 		double denominator = Math.max(Math.abs(x) + Math.abs(y) + Math.abs(turn), 1);
 		frontLeft.setPower((y + x + turn) / denominator);
 		backLeft.setPower((y - x + turn) / denominator);
@@ -166,10 +174,10 @@ public class Drive {
 
 	private void configure(Telemetry telemetry) {
 		telemetry.log().add("Configuring motors...");
-		frontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
-		backLeft.setDirection(DcMotorSimple.Direction.REVERSE);
-		frontRight.setDirection(DcMotorSimple.Direction.FORWARD);
-		backRight.setDirection(DcMotorSimple.Direction.FORWARD);
+		frontLeft.setDirection(DcMotorSimple.Direction.FORWARD);
+		backLeft.setDirection(DcMotorSimple.Direction.FORWARD);
+		frontRight.setDirection(DcMotorSimple.Direction.REVERSE);
+		backRight.setDirection(DcMotorSimple.Direction.REVERSE);
 
 		frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 		backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);

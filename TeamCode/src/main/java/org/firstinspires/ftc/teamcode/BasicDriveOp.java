@@ -12,6 +12,7 @@ import java.util.List;
 public class BasicDriveOp extends LinearOpMode {
 	@Override
 	public void runOpMode() {
+		telemetry.log().setDisplayOrder(Telemetry.Log.DisplayOrder.NEWEST_FIRST);
 		telemetry.log().add("Initializing...");
 
 		telemetry.log().add("Activating cache...");
