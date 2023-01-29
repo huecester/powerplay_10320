@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import static org.firstinspires.ftc.teamcode.Config.SLIDE_BOTTOM_LIMIT;
+import static org.firstinspires.ftc.teamcode.Config.SLIDE_TOP_LIMIT;
 import static org.firstinspires.ftc.teamcode.Config.SLIDE_VELOCITY;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -63,11 +64,9 @@ public class Slide {
 	 * Raise the slide.
 	 */
 	public void raise() {
-		/*
-		if (motor.getCurrent() >= SLIDE_TOP_LIMIT)
+		if (motor.getCurrentPosition() >= SLIDE_TOP_LIMIT)
 			stop();
 		else
-		*/
 			motor.setVelocity(SLIDE_VELOCITY);
 	}
 

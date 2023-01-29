@@ -36,7 +36,7 @@ public class Config {
 	/**
 	 * Velocity to set the slide motor to, in ticks per second.
 	 */
-	public static final double SLIDE_VELOCITY = 500;
+	public static final double SLIDE_VELOCITY = 2500;
 	/**
 	 * Bottom limit to stop the slide at when lowering, in ticks.
 	 */
@@ -44,7 +44,7 @@ public class Config {
 	/**
 	 * Top limit to stop the slide at when raising, in ticks.
 	 */
-	public static final int SLIDE_TOP_LIMIT = 1000;
+	public static final int SLIDE_TOP_LIMIT = 8500;
 
 	/**
 	 * Size of AprilTags, in meters.
