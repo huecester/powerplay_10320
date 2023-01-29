@@ -51,9 +51,9 @@ public class Slide {
 	public void control(GamepadEx gamepad) {
 		debugItem.setValue(motor.getCurrentPosition());
 
-		if (gamepad.isPressed(GamepadEx.Button.Y)) {
+		if (gamepad.getRT() >= 0.1) {
 			raise();
-		} else if (gamepad.isPressed(GamepadEx.Button.X)) {
+		} else if (gamepad.getLT() >= 0.1) {
 			lower();
 		} else {
 			stop();
