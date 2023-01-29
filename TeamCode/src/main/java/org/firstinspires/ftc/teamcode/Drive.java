@@ -32,7 +32,6 @@ public class Drive {
 	private final boolean useHeading;
 	private final boolean isAuton;
 
-	// TODO: remove
 	private final Telemetry.Item debugHeadingItem;
 	private final Telemetry.Item debugGamepadItem;
 

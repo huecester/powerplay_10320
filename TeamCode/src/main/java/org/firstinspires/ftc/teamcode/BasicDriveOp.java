@@ -21,7 +21,6 @@ public class BasicDriveOp extends LinearOpMode {
 			hub.setBulkCachingMode(LynxModule.BulkCachingMode.AUTO);
 		}
 
-		// TODO: fine-tune button/toggle
 		Drive drive = new Drive(hardwareMap, telemetry, Drive.Flag.DISABLE_HEADING);
 		// TODO: customizable controls
 		Claw claw = new Claw(hardwareMap, telemetry);
