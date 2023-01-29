@@ -73,6 +73,8 @@ public class Drive {
 	}
 
 	private Drive(HardwareMap hardwareMap, Telemetry telemetry, boolean useHeading, boolean isAuton) {
+		telemetry.log().add("Setting up drive...");
+
 		this.useHeading = useHeading;
 		this.isAuton = isAuton;
 
@@ -143,6 +145,16 @@ public class Drive {
 		double x = power * Math.sin(angle);
 		double y = power * Math.cos(angle);
 		drive(x, y, turn, fineTune);
+	}
+
+	/**
+	 * Stop all motors in the drive train.
+	 */
+	public void stop() {
+		frontLeft.setPower(0);
+		backLeft.setPower(0);
+		frontRight.setPower(0);
+		backRight.setPower(0);
 	}
 
 	private void drive(double x, double y, double turn, boolean fineTune) {
