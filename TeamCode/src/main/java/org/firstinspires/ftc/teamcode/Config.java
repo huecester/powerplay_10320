@@ -60,7 +60,7 @@ public class Config {
 	 *
 	 * @see Slide
 	 */
-	public static final int SLIDE_BOTTOM_LIMIT = 10;
+	public static final int SLIDE_BOTTOM_LIMIT = 50;
 	/**
 	 * Top limit to stop the slide at when raising, in ticks.
 	 *
