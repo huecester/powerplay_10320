@@ -54,7 +54,7 @@ public class Config {
 	 *
 	 * @see Slide
 	 */
-	public static final double SLIDE_VELOCITY = 2500;
+	public static final double SLIDE_VELOCITY = 10000;
 	/**
 	 * Bottom limit to stop the slide at when lowering, in ticks.
 	 *
@@ -66,7 +66,7 @@ public class Config {
 	 *
 	 * @see Slide
 	 */
-	public static final int SLIDE_TOP_LIMIT = 100000;
+	public static final int SLIDE_TOP_LIMIT = 9250;
 
 	/**
 	 * Size of AprilTags, in meters.
