@@ -34,7 +34,7 @@ public class Slide {
 		motor = hardwareMap.get(DcMotorEx.class, "slide");
 
 		telemetry.log().add("Configuring motor...");
-		motor.setDirection(DcMotorSimple.Direction.FORWARD);
+		motor.setDirection(DcMotorSimple.Direction.REVERSE);
 		motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 		motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 		motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -78,6 +78,28 @@ public class Slide {
 			stop();
 		else
 			motor.setVelocity(-SLIDE_VELOCITY);
+	}
+
+	/**
+	 * Raise the slide to the top.
+	 */
+	public void top() {
+		motor.setVelocity(SLIDE_VELOCITY);
+		while (motor.getCurrentPosition() < SLIDE_TOP_LIMIT) {
+			Thread.yield();
+		}
+		stop();
+	}
+
+	/**
+	 * Lower the slide to the bottom.
+	 */
+	public void bottom() {
+		motor.setVelocity(-SLIDE_VELOCITY);
+		while (motor.getCurrentPosition() > SLIDE_BOTTOM_LIMIT) {
+			Thread.yield();
+		}
+		stop();
 	}
 
 	/**
