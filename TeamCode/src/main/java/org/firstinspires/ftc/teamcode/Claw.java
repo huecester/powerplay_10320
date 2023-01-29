@@ -65,7 +65,6 @@ public class Claw {
 			} else {
 				open();
 			}
-			isOpen = !isOpen;
 		}
 	}
 
@@ -77,6 +76,7 @@ public class Claw {
 	public void close() {
 		left.setPosition(CLAW_CLOSE_POSITION);
 		right.setPosition(CLAW_CLOSE_POSITION);
+		isOpen = false;
 	}
 
 	/**
@@ -87,5 +87,6 @@ public class Claw {
 	public void open() {
 		left.setPosition(CLAW_OPEN_POSITION);
 		right.setPosition(CLAW_OPEN_POSITION);
+		isOpen = true;
 	}
 }
