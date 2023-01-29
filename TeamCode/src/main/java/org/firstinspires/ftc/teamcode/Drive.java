@@ -122,7 +122,7 @@ public class Drive {
 		}
 
 		double x = (gamepad.isPressed(GamepadEx.Button.RB) ? 1 : 0) - (gamepad.isPressed(GamepadEx.Button.LB) ? 1 : 0);
-		double y = gamepad.getLeftY();
+		double y = -gamepad.getLeftY();
 		double turn = gamepad.getLeftX();
 		boolean fineTune = gamepad.isPressed(GamepadEx.Button.B);
 		debugGamepadItem.setValue(DECIMAL_FORMAT + " | " + DECIMAL_FORMAT + " | " + DECIMAL_FORMAT + " | " + fineTune, x, y, turn);
@@ -156,13 +156,14 @@ public class Drive {
 		backRight.setPower(0);
 	}
 
-	public void drive(double x, double y, double turn, boolean fineTune) {
+	private void drive(double x, double y, double turn, boolean fineTune) {
 		// https://gm0.org/en/latest/docs/software/tutorials/mecanum-drive.html#robot-centric-final-sample-code
 		x *= STRAFING_MODIFIER; // Make strafing more powerful
 
 		if (fineTune) {
 			x *= FINE_TUNE_MODIFIER;
 			y *= FINE_TUNE_MODIFIER;
+			turn *= FINE_TUNE_MODIFIER;
 		}
 
 		// https://gm0.org/en/latest/docs/software/tutorials/mecanum-drive.html#field-centric

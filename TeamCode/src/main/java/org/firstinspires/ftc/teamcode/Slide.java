@@ -15,6 +15,8 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
  * A wrapper around a one-motor linear slide.
  */
 public class Slide {
+	private final boolean useLimits;
+
 	private final DcMotorEx motor;
 
 	private final Telemetry.Item debugItem;
@@ -26,6 +28,19 @@ public class Slide {
 	 * @param telemetry Telemetry object for logging.
 	 */
 	public Slide(HardwareMap hardwareMap, Telemetry telemetry) {
+		this(hardwareMap, telemetry, true);
+	}
+
+	/**
+	 * Create a slide system, specifying whether to use limits.
+	 *
+	 * @param hardwareMap Hardware map used to initialize the motor.
+	 * @param telemetry   Telemetry object for logging.
+	 * @param useLimits   Whether to use limits.
+	 */
+	public Slide(HardwareMap hardwareMap, Telemetry telemetry, boolean useLimits) {
+		this.useLimits = useLimits;
+
 		telemetry.log().add("Setting up slide...");
 
 		debugItem = telemetry.addData("[DEBUG] Slide", "");
@@ -64,7 +79,7 @@ public class Slide {
 	 * Raise the slide.
 	 */
 	public void raise() {
-		if (motor.getCurrentPosition() >= SLIDE_TOP_LIMIT)
+		if (useLimits && motor.getCurrentPosition() >= SLIDE_TOP_LIMIT)
 			stop();
 		else
 			motor.setVelocity(SLIDE_VELOCITY);
@@ -74,10 +89,32 @@ public class Slide {
 	 * Lower the slide.
 	 */
 	public void lower() {
-		if (motor.getCurrentPosition() <= SLIDE_BOTTOM_LIMIT)
+		if (useLimits && motor.getCurrentPosition() <= SLIDE_BOTTOM_LIMIT)
 			stop();
 		else
 			motor.setVelocity(-SLIDE_VELOCITY);
+	}
+
+	/**
+	 * Raise the slide to the top.
+	 */
+	public void top() {
+		motor.setVelocity(SLIDE_VELOCITY);
+		while (motor.getCurrentPosition() < SLIDE_TOP_LIMIT) {
+			Thread.yield();
+		}
+		stop();
+	}
+
+	/**
+	 * Lower the slide to the bottom.
+	 */
+	public void bottom() {
+		motor.setVelocity(-SLIDE_VELOCITY);
+		while (motor.getCurrentPosition() > SLIDE_BOTTOM_LIMIT) {
+			Thread.yield();
+		}
+		stop();
 	}
 
 	/**

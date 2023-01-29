@@ -43,8 +43,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-@Autonomous(name = "Parking")
-public class ParkingAuton extends LinearOpMode {
+@Autonomous(name = "Parking + cone left")
+public class ParkingConeLeftAuton extends LinearOpMode {
 	@Override
 	public void runOpMode() throws InterruptedException {
         telemetry.log().setDisplayOrder(Telemetry.Log.DisplayOrder.NEWEST_FIRST);
@@ -58,8 +58,8 @@ public class ParkingAuton extends LinearOpMode {
 
 		telemetry.log().add("Setting up hardware...");
         Drive drive = new Drive(hardwareMap, telemetry, Drive.Flag.AUTON);
+		Slide slide = new Slide(hardwareMap, telemetry);
 		Claw claw = new Claw(hardwareMap, telemetry);
-		claw.open();
 
 		telemetry.log().add("Creating AprilTagDetection components...");
 		AprilTagDetection tagOfInterest = null;
@@ -130,14 +130,30 @@ public class ParkingAuton extends LinearOpMode {
 
 		drive.driveAtAngle(1.0, 0, 0, false);
 		Thread.sleep(1050);
+		drive.stop();
+		slide.top();
+		drive.driveAtAngle(1.0, Math.toRadians(-90), 0, false);
+		Thread.sleep(600);
+		drive.driveAtAngle(0.5, 0, 0, false);
+		Thread.sleep(250);
+		drive.stop();
+		claw.open();
+		slide.bottom();
+		drive.driveAtAngle(0.5, Math.toRadians(180), 0, false);
+		Thread.sleep(250);
 		switch (tagOfInterest != null ? tagOfInterest.id : -1) {
 			case TAG_LEFT:
 				drive.driveAtAngle(1.0, Math.toRadians(-90), 0, false);
-				Thread.sleep(1200);
+				Thread.sleep(600);
 				break;
 			case TAG_RIGHT:
 				drive.driveAtAngle(1.0, Math.toRadians(90), 0, false);
-				Thread.sleep(1200);
+				Thread.sleep(1800);
+				break;
+			case TAG_MIDDLE:
+			default:
+				drive.driveAtAngle(1.0, Math.toRadians(90), 0, false);
+				Thread.sleep(600);
 				break;
 		}
 		drive.stop();
