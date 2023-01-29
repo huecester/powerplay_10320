@@ -163,6 +163,7 @@ public class Drive {
 		if (fineTune) {
 			x *= FINE_TUNE_MODIFIER;
 			y *= FINE_TUNE_MODIFIER;
+			turn *= FINE_TUNE_MODIFIER;
 		}
 
 		// https://gm0.org/en/latest/docs/software/tutorials/mecanum-drive.html#field-centric
