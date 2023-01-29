@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import static org.firstinspires.ftc.teamcode.Config.DECIMAL_FORMAT;
+import static org.firstinspires.ftc.teamcode.Config.FINE_TUNE_MODIFIER;
 import static org.firstinspires.ftc.teamcode.Config.LOGO_DIRECTION;
 import static org.firstinspires.ftc.teamcode.Config.STRAFING_MODIFIER;
 import static org.firstinspires.ftc.teamcode.Config.USB_DIRECTION;
@@ -161,8 +162,8 @@ public class Drive {
 		x *= STRAFING_MODIFIER; // Make strafing more powerful
 
 		if (fineTune) {
-			x /= 4;
-			y /= 4;
+			x *= FINE_TUNE_MODIFIER;
+			y *= FINE_TUNE_MODIFIER;
 		}
 
 		// https://gm0.org/en/latest/docs/software/tutorials/mecanum-drive.html#field-centric
