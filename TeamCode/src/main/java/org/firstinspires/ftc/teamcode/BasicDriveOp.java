@@ -22,14 +22,9 @@ public class BasicDriveOp extends LinearOpMode {
 		}
 
 		// TODO: fine-tune button/toggle
-		telemetry.log().add("Setting up drive...");
 		Drive drive = new Drive(hardwareMap, telemetry, Drive.Flag.DISABLE_HEADING);
-
 		// TODO: customizable controls
-		telemetry.log().add("Setting up claw...");
 		Claw claw = new Claw(hardwareMap, telemetry);
-
-		telemetry.log().add("Setting up slide...");
 		Slide slide = new Slide(hardwareMap, telemetry);
 
 		telemetry.log().add("Initialized.");

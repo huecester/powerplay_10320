@@ -27,6 +27,8 @@ public class Claw {
 	 * @param telemetry Telemetry object for logging.
 	 */
 	public Claw(HardwareMap hardwareMap, Telemetry telemetry) {
+		telemetry.log().add("Setting up claw...");
+
 		telemetry.log().add("Creating telemetry items...");
 		leftItem = telemetry.addData("[DEBUG] Left", DECIMAL_FORMAT, 0.0);
 		rightItem = telemetry.addData("[DEBUG] Right", DECIMAL_FORMAT, 0.0);

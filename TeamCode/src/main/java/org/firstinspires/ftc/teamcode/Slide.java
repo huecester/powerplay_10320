@@ -25,6 +25,8 @@ public class Slide {
 	 * @param telemetry Telemetry object for logging.
 	 */
 	public Slide(HardwareMap hardwareMap, Telemetry telemetry) {
+		telemetry.log().add("Setting up slide...");
+
 		debugItem = telemetry.addData("[DEBUG] Slide", "");
 
 		telemetry.log().add("Setting up slide hardware...");

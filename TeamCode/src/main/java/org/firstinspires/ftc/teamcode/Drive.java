@@ -73,6 +73,8 @@ public class Drive {
 	}
 
 	private Drive(HardwareMap hardwareMap, Telemetry telemetry, boolean useHeading, boolean isAuton) {
+		telemetry.log().add("Setting up drive...");
+
 		this.useHeading = useHeading;
 		this.isAuton = isAuton;
 
