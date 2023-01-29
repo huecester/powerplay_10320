@@ -8,6 +8,7 @@ public class ManualTestSlide extends LinearOpMode {
 	@Override
 	public void runOpMode() {
 		Slide slide = new Slide(hardwareMap, telemetry, false);
+		Claw claw = new Claw(hardwareMap, telemetry);
 		GamepadEx p1 = new GamepadEx();
 
 		waitForStart();
@@ -15,6 +16,7 @@ public class ManualTestSlide extends LinearOpMode {
 		while (opModeIsActive()) {
 			p1.tick(gamepad1);
 			slide.control(p1);
+			claw.control(p1);
 		}
 	}
 }
