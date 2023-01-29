@@ -118,7 +118,7 @@ public class ParkingAuton extends LinearOpMode {
 			}
 
 			telemetry.update();
-			idle();
+			Thread.sleep(250);
 		}
 
 		if (tagOfInterest != null) {
@@ -128,19 +128,16 @@ public class ParkingAuton extends LinearOpMode {
 		}
 		telemetry.update();
 
+		drive.driveAtAngle(1.0, 0, 0, false);
+		Thread.sleep(1200);
 		switch (tagOfInterest != null ? tagOfInterest.id : -1) {
 			case TAG_LEFT:
-				drive.driveAtAngle(1.0, Math.toRadians(-45), 0, false);
-				Thread.sleep(1500);
+				drive.driveAtAngle(1.0, Math.toRadians(-90), 0, false);
+				Thread.sleep(1200);
 				break;
 			case TAG_RIGHT:
-				drive.driveAtAngle(1.0, Math.toRadians(45), 0, false);
-				Thread.sleep(1500);
-				break;
-			case TAG_MIDDLE:
-			default:
-				drive.driveAtAngle(1.0, Math.toRadians(0), 0, false);
-				Thread.sleep(1500);
+				drive.driveAtAngle(1.0, Math.toRadians(90), 0, false);
+				Thread.sleep(1200);
 				break;
 		}
 		drive.stop();
