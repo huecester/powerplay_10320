@@ -2,7 +2,6 @@ package org.firstinspires.ftc.teamcode
 
 import com.qualcomm.robotcore.hardware.DcMotorEx
 import com.qualcomm.robotcore.hardware.DcMotorSimple
-import com.qualcomm.robotcore.hardware.Gamepad
 import com.qualcomm.robotcore.hardware.HardwareMap
 import org.firstinspires.ftc.robotcore.external.Telemetry
 import kotlin.math.absoluteValue
@@ -31,11 +30,11 @@ class Drive(hardwareMap: HardwareMap, telemetry: Telemetry) {
 		telemetry.log().add("Drive initialized.")
 	}
 
-	fun drive(gamepad: Gamepad) {
+	fun drive(gamepad: GamepadEx) {
 		// https://gm0.org/en/latest/docs/software/tutorials/mecanum-drive.html
-		val x = (gamepad.right_bumper.toDouble() - gamepad.left_bumper.toDouble()) * 1.1
-		val y = -gamepad.left_stick_y
-		val turn = gamepad.left_stick_x
+		val x = (gamepad.getButton(GamepadEx.Button.RB).toDouble() - gamepad.getButton(GamepadEx.Button.LB).toDouble()) * 1.1
+		val y = -gamepad.leftY
+		val turn = gamepad.leftX
 
 		val denominator =
 			(x.absoluteValue + y.absoluteValue + turn.absoluteValue).coerceAtLeast(1.0)
