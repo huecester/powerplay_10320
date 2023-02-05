@@ -10,8 +10,9 @@ class MainOp : LinearOpMode() {
 		telemetry.log().displayOrder = Telemetry.Log.DisplayOrder.NEWEST_FIRST
 		telemetry.log().add("Initializing robot...")
 		activateCache()
-		val drive = Drive(hardwareMap, telemetry)
 		val gamepad = GamepadEx(gamepad1)
+		val drive = Drive(hardwareMap, telemetry)
+		val claw = Claw(hardwareMap, telemetry, gamepad)
 		telemetry.log().add("Initialized.")
 
 		waitForStart()
