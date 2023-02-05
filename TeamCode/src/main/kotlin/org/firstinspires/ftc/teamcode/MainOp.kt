@@ -13,6 +13,7 @@ class MainOp : LinearOpMode() {
 		val gamepad = GamepadEx(gamepad1)
 		val drive = Drive(hardwareMap, telemetry)
 		val claw = Claw(hardwareMap, telemetry, gamepad)
+		val slide = Slide(hardwareMap, telemetry)
 		telemetry.log().add("Initialized.")
 
 		waitForStart()
@@ -20,6 +21,7 @@ class MainOp : LinearOpMode() {
 		while (opModeIsActive()) {
 			gamepad.tick()
 			drive.drive(gamepad)
+			slide.slide(gamepad)
 			telemetry.update()
 		}
 	}
