@@ -6,8 +6,10 @@ import com.qualcomm.robotcore.hardware.DcMotor.RunMode
 import com.qualcomm.robotcore.hardware.DcMotor.ZeroPowerBehavior
 import com.qualcomm.robotcore.hardware.DcMotorEx
 import com.qualcomm.robotcore.hardware.DcMotorSimple.Direction
+import com.qualcomm.robotcore.hardware.Servo
+import com.qualcomm.robotcore.hardware.ServoImplEx
 
-fun Boolean.toNum() = if (this) 1.0 else 0.0
+fun Boolean.toDouble() = if (this) 1.0 else 0.0
 
 fun LinearOpMode.activateCache() {
 	telemetry.log().add("Activating cache...")
@@ -26,4 +28,13 @@ fun DcMotorEx.configure(
 	this.zeroPowerBehavior = zeroPowerBehavior
 	if (mode == RunMode.RUN_TO_POSITION) this.targetPosition = 0
 	this.mode = mode
+}
+
+fun ServoImplEx.configure(
+	direction: Servo.Direction = Servo.Direction.FORWARD,
+	rangeMin: Double = 0.0,
+	rangeMax: Double = 1.0,
+) {
+	this.direction = direction
+	this.scaleRange(rangeMin, rangeMax)
 }
