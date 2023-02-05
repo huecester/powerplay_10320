@@ -7,7 +7,7 @@ private const val TRIGGER_THRESHOLD = 0.2
 typealias Event = Pair<GamepadEx.Button, GamepadEx.RisingOrFalling>
 typealias Handler = () -> Unit
 
-class GamepadEx(val gamepad: Gamepad) {
+class GamepadEx(private val gamepad: Gamepad) {
 	enum class Button {
 		A,
 		B,
