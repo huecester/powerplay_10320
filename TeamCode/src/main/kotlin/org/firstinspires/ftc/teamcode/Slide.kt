@@ -4,10 +4,6 @@ import com.qualcomm.robotcore.hardware.DcMotorEx
 import com.qualcomm.robotcore.hardware.HardwareMap
 import org.firstinspires.ftc.robotcore.external.Telemetry
 
-private const val SLIDE_TOP_LIMIT = 9250
-private const val SLIDE_BOTTOM_LIMIT = 50
-private const val SLIDE_POWER = 1.0
-
 class Slide(hardwareMap: HardwareMap, telemetry: Telemetry) {
 	private val motor: DcMotorEx
 
@@ -30,13 +26,13 @@ class Slide(hardwareMap: HardwareMap, telemetry: Telemetry) {
 	}
 
 	private fun raise() {
-		if (motor.currentPosition >= SLIDE_TOP_LIMIT) stop()
-		else motor.power = SLIDE_POWER
+		if (motor.currentPosition >= Parameters.SLIDE_TOP_LIMIT) stop()
+		else motor.power = Parameters.SLIDE_POWER
 	}
 
 	private fun lower() {
-		if (motor.currentPosition <= SLIDE_BOTTOM_LIMIT) stop()
-		else motor.power = -SLIDE_POWER
+		if (motor.currentPosition <= Parameters.SLIDE_BOTTOM_LIMIT) stop()
+		else motor.power = -Parameters.SLIDE_POWER
 	}
 
 	private fun stop() { motor.power = 0.0 }

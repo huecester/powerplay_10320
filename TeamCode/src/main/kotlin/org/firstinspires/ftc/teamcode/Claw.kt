@@ -5,9 +5,6 @@ import com.qualcomm.robotcore.hardware.Servo
 import com.qualcomm.robotcore.hardware.ServoImplEx
 import org.firstinspires.ftc.robotcore.external.Telemetry
 
-private const val CLAW_CLOSE_POSITION = 0.2
-private const val CLAW_OPEN_POSITION = 0.7
-
 class Claw(hardwareMap: HardwareMap, telemetry: Telemetry, gamepad: GamepadEx) {
 	private val left: ServoImplEx
 	private val right: ServoImplEx
@@ -40,14 +37,14 @@ class Claw(hardwareMap: HardwareMap, telemetry: Telemetry, gamepad: GamepadEx) {
 	}
 
 	private fun close() {
-		left.position = CLAW_CLOSE_POSITION
-		right.position = CLAW_CLOSE_POSITION
+		left.position = Parameters.CLAW_CLOSE_POSITION
+		right.position = Parameters.CLAW_CLOSE_POSITION
 		isOpen = false
 	}
 
 	private fun open() {
-		left.position = CLAW_OPEN_POSITION
-		right.position = CLAW_OPEN_POSITION
+		left.position = Parameters.CLAW_OPEN_POSITION
+		right.position = Parameters.CLAW_OPEN_POSITION
 		isOpen = true
 	}
 }
