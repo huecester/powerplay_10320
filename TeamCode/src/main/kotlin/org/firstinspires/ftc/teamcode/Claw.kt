@@ -1,9 +1,16 @@
 package org.firstinspires.ftc.teamcode
 
+import com.acmerobotics.dashboard.config.Config
 import com.qualcomm.robotcore.hardware.HardwareMap
 import com.qualcomm.robotcore.hardware.Servo
 import com.qualcomm.robotcore.hardware.ServoImplEx
 import org.firstinspires.ftc.robotcore.external.Telemetry
+
+@Config
+object ClawParameters {
+	@JvmField var CLAW_CLOSE_POSITION = 0.2
+	@JvmField var CLAW_OPEN_POSITION = 0.7
+}
 
 class Claw(hardwareMap: HardwareMap, telemetry: Telemetry, gamepad: GamepadEx) {
 	private val left: ServoImplEx
@@ -37,14 +44,14 @@ class Claw(hardwareMap: HardwareMap, telemetry: Telemetry, gamepad: GamepadEx) {
 	}
 
 	private fun close() {
-		left.position = Parameters.CLAW_CLOSE_POSITION
-		right.position = Parameters.CLAW_CLOSE_POSITION
+		left.position = ClawParameters.CLAW_CLOSE_POSITION
+		right.position = ClawParameters.CLAW_CLOSE_POSITION
 		isOpen = false
 	}
 
 	private fun open() {
-		left.position = Parameters.CLAW_OPEN_POSITION
-		right.position = Parameters.CLAW_OPEN_POSITION
+		left.position = ClawParameters.CLAW_OPEN_POSITION
+		right.position = ClawParameters.CLAW_OPEN_POSITION
 		isOpen = true
 	}
 }

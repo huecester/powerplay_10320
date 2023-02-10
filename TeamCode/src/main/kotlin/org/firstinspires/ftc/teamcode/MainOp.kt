@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode
 
+import com.acmerobotics.dashboard.FtcDashboard
+import com.acmerobotics.dashboard.telemetry.MultipleTelemetry
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import org.firstinspires.ftc.robotcore.external.Telemetry
@@ -7,6 +9,8 @@ import org.firstinspires.ftc.robotcore.external.Telemetry
 @TeleOp(name = "Main manual op mode")
 class MainOp : LinearOpMode() {
 	override fun runOpMode() {
+		val telemetry = MultipleTelemetry(telemetry, FtcDashboard.getInstance().telemetry)
+
 		telemetry.log().displayOrder = Telemetry.Log.DisplayOrder.NEWEST_FIRST
 		telemetry.log().add("Initializing robot...")
 		activateCache()
