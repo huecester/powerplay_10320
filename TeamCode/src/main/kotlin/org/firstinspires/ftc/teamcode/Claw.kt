@@ -33,7 +33,7 @@ class Claw(hardwareMap: HardwareMap, telemetry: Telemetry, gamepad: GamepadEx) {
 		close()
 
 		telemetry.log().add("Adding gamepad handlers...")
-		gamepad.addButtonHandler(GamepadEx.Button.A to GamepadEx.RisingOrFalling.FALLING) {
+		gamepad.addButtonHandler(GamepadEx.Button.A to GamepadEx.RisingOrFalling.RISING) {
 			if (isOpen)
 				close()
 			else
