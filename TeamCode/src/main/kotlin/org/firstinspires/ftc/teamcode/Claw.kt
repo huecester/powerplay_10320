@@ -8,8 +8,10 @@ import org.firstinspires.ftc.robotcore.external.Telemetry
 
 @Config
 object ClawParameters {
-	@JvmField var CLAW_CLOSE_POSITION = 0.2
-	@JvmField var CLAW_OPEN_POSITION = 0.7
+	@JvmField
+	var CLAW_CLOSE_POSITION = 0.2
+	@JvmField
+	var CLAW_OPEN_POSITION = 0.7
 }
 
 class Claw(hardwareMap: HardwareMap, telemetry: Telemetry, gamepad: GamepadEx) {

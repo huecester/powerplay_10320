@@ -71,8 +71,11 @@ class GamepadEx(private val gamepad: Gamepad) {
 	}
 
 	fun getButton(button: Button): Boolean = getButtonPair(button).second
-	private fun didRise(button: Button): Boolean = getButtonPair(button).let { !it.first && it.second }
-	private fun didFall(button: Button): Boolean = getButtonPair(button).let { it.first && !it.second }
+	private fun didRise(button: Button): Boolean =
+		getButtonPair(button).let { !it.first && it.second }
+
+	private fun didFall(button: Button): Boolean =
+		getButtonPair(button).let { it.first && !it.second }
 
 	private fun getButtonPair(button: Button) =
 		when (button) {

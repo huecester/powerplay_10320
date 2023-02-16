@@ -7,9 +7,12 @@ import org.firstinspires.ftc.robotcore.external.Telemetry
 
 @Config
 object SlideParameters {
-	@JvmField var SLIDE_TOP_LIMIT = 9250
-	@JvmField var SLIDE_BOTTOM_LIMIT = 50
-	@JvmField var SLIDE_POWER = 1.0
+	@JvmField
+	var SLIDE_TOP_LIMIT = 9250
+	@JvmField
+	var SLIDE_BOTTOM_LIMIT = 50
+	@JvmField
+	var SLIDE_POWER = 1.0
 }
 
 class Slide(hardwareMap: HardwareMap, telemetry: Telemetry) {
@@ -43,5 +46,7 @@ class Slide(hardwareMap: HardwareMap, telemetry: Telemetry) {
 		else motor.power = -SlideParameters.SLIDE_POWER
 	}
 
-	private fun stop() { motor.power = 0.0 }
+	private fun stop() {
+		motor.power = 0.0
+	}
 }

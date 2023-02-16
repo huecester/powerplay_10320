@@ -32,7 +32,8 @@ class Drive(hardwareMap: HardwareMap, telemetry: Telemetry) {
 
 	fun drive(gamepad: GamepadEx) {
 		// https://gm0.org/en/latest/docs/software/tutorials/mecanum-drive.html
-		val x = (gamepad.getButton(GamepadEx.Button.RB).toDouble() - gamepad.getButton(GamepadEx.Button.LB).toDouble()) * 1.1
+		val x = (gamepad.getButton(GamepadEx.Button.RB)
+			.toDouble() - gamepad.getButton(GamepadEx.Button.LB).toDouble()) * 1.1
 		val y = -gamepad.leftY
 		val turn = gamepad.leftX
 
